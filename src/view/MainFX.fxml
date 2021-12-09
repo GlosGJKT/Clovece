@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.canvas.Canvas?>
-<?import javafx.scene.control.Accordion?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -10,14 +10,16 @@
 
 <AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.MainFXController">
     <children>
-        <AnchorPane fx:id="plocha" layoutX="16.0" layoutY="16.0" prefHeight="568.0" prefWidth="571.0" style="-fx-background-color: lightgray;">
+        <Canvas fx:id="platno" height="568.0" layoutX="17.0" layoutY="18.0" style="-fx-background-color: blue;" width="571.0" />
+        <AnchorPane fx:id="plocha" layoutX="32.0" layoutY="33.0" prefHeight="568.0" prefWidth="571.0">
             <children>
-                <AnchorPane layoutX="260.0" layoutY="260.0" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: lightpink;" />
+                <AnchorPane layoutX="245.0" layoutY="245.0" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: lightpink;">
+               <children>
+                  <Label fx:id="kostkaLabel" layoutX="10.0" layoutY="-6.0" prefHeight="40.0" prefWidth="39.0" />
+               </children></AnchorPane>
             </children>
         </AnchorPane>
-        <Canvas fx:id="platno" height="568.0" layoutX="17.0" layoutY="18.0" style="-fx-background-color: blue;" width="571.0" />
         <Button layoutX="10.0" layoutY="570.0" mnemonicParsing="false" onAction="#hod" text="Hod" />
-        <Accordion layoutX="52.0" layoutY="42.0" prefWidth="0.0" />
         <GridPane gridLinesVisible="true" layoutX="594.0" layoutY="16.0" prefHeight="568.0" prefWidth="191.0" style="-fx-background-color: lightgray;">
             <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
