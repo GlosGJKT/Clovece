@@ -4,6 +4,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 
 import javafx.scene.canvas.Canvas;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
@@ -24,6 +25,9 @@ public class MainFXController {
 
     @FXML
     AnchorPane plocha;
+
+    @FXML
+    Label kostkaLabel;
 
     LinkedList<Circle> figZ = new LinkedList<>();
     LinkedList<Color> barvy = new LinkedList<>();
@@ -118,6 +122,8 @@ public class MainFXController {
                     fig = kol;
                     indexy[0][0] = (int)kol.getLayoutX();
                     indexy[1][0] = (int)kol.getLayoutY();
+                    nasadFig();
+                    System.out.println("Kliknuto");
                 }
             });
         }
@@ -173,21 +179,20 @@ public class MainFXController {
     }
 
     public void hod(){
-        hod = HraciPlocha.hod();
+        int a = HraciPlocha.hod();
+        String b = Integer.toString(a);
+        kostkaLabel.setFont(Font.font(40));
+        kostkaLabel.setText(b);
+    }
+
+
+    /*hod = HraciPlocha.hod();
         String b = Integer.toString(hod);
         platno.getGraphicsContext2D().setFill(Color.LIGHTPINK);
         platno.getGraphicsContext2D().fillRect(263,258,40,40);
         platno.getGraphicsContext2D().setFont(Font.font(40));
         platno.getGraphicsContext2D().setFill(Color.BLACK);
-        platno.getGraphicsContext2D().fillText(b,273,297);
-    }
+        platno.getGraphicsContext2D().fillText(b,273,297);*/
 
 
-    /*public void hod() {
-        int a = app.Main.hod();
-        String b = Integer.toString(a);
-        platno.getGraphicsContext2D().setFill(Color.GRAY);
-        platno.getGraphicsContext2D().fillRect(200,200,10,10);
-        platno.getGraphicsContext2D().fillText(b,200, 200);
-    }*/
 }
