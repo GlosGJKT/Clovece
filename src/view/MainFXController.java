@@ -37,25 +37,6 @@ public class MainFXController {
 
 
 
-    public void figurky(){
-        for(int x = 0; x < 4; x++){
-            for(int y = 0; y < 200; y += 50){
-                Circle kol = new Circle();
-                kol.setFill(Color.YELLOW);
-                kol.setRadius(30);
-                kol.setLayoutX(30);
-                kol.setLayoutY(30+y);
-                figZ.add(kol);
-                plocha.getChildren().add(kol);
-            }
-        }
-    }
-
-
-
-    public void kresli(){
-        platno.getGraphicsContext2D().fillRect(100,100,100,20);
-    }
 
     public void hriste(){
 
@@ -100,40 +81,47 @@ public class MainFXController {
         }
 
 
-        LinkedList<Color> barvy = new LinkedList<>();
+        /*LinkedList<Color> barvy = new LinkedList<>();
         barvy.add(Color.BLUE);
         barvy.add(Color.GREEN);
         barvy.add(Color.RED);
-        barvy.add(Color.YELLOW);
+        barvy.add(Color.YELLOW);*/
 
 
         //FIGURKY
         for(int x = 0; x < 4; x++){
-            Circle kol = new Circle();
-            kol.setFill(barvy.get(x));
-            kol.setRadius(15);
-            figZ.add(kol);
-            plocha.getChildren().add(kol);
-            kol.setLayoutX(HraciPlocha.indexDomecku(x)[0]);
-            kol.setLayoutY(HraciPlocha.indexDomecku(x)[1]);
-            kol.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent mouseEvent) {
-                    fig = kol;
-                    indexy[0][0] = (int)kol.getLayoutX();
-                    indexy[1][0] = (int)kol.getLayoutY();
-                    nasadFig();
-                    System.out.println("Kliknuto");
-                }
-            });
+            for(int y = 0; y < 4; y++) {
+                Circle kol = new Circle();
+                kol.setFill(barvy.get(x));
+                kol.setRadius(15);
+                figZ.add(kol);
+                plocha.getChildren().add(kol);
+                kol.setLayoutX(HraciPlocha.indexDomecku(x)[0]);
+                kol.setLayoutY(HraciPlocha.indexDomecku(x)[1]);
+                kol.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent mouseEvent) {
+                        fig = kol;
+                        indexy[0][0] = (int) kol.getLayoutX();
+                        indexy[1][0] = (int) kol.getLayoutY();
+                        pohyb();
+                    }
+                });
+            }
         }
     }
 
 
-    public void dsc(){
-        platno.getGraphicsContext2D().setFill(Color.PURPLE);
-        for(int d=0;d<40;d++){
-            platno.getGraphicsContext2D().fillOval(HraciPlocha.indexPole(d)[0],HraciPlocha.indexPole(d)[1],30,30);
+
+    public void pohyb(){
+        if(hod == 6){
+            if(vDomecku()==true){
+                nasadFig();
+            }
+            posunFig();
+        }
+        else{
+            posunFig();
         }
     }
 
@@ -154,25 +142,23 @@ public class MainFXController {
             fig.setLayoutX(HraciPlocha.indexPole(30)[0]);
             fig.setLayoutY(HraciPlocha.indexPole(30)[1]);
         }
-        Circle kol = new Circle();
-        kol.setFill(Color.PURPLE);
-        kol.setRadius(15);
-        plocha.getChildren().add(kol);
+
 
     }
 
-    public void posunFig(){
+    public void posunFig() {
+
         int x = 0;
+
         while(indexy[0][0] != HraciPlocha.indexPole(x)[0] && indexy[1][0] != HraciPlocha.indexPole(x)[1]){
             x++;
         }
-        int y = x-1;
         int kamIndex;
-        if(y+hod < 40){
-            kamIndex = y+hod;
+        if(x+hod < 40){
+            kamIndex = x+hod;
         }
         else{
-            kamIndex = y+hod - 40;
+            kamIndex = x+hod - 40;
         }
         fig.setLayoutX(HraciPlocha.indexPole(kamIndex)[0]);
         fig.setLayoutY(HraciPlocha.indexPole(kamIndex)[1]);
@@ -183,8 +169,16 @@ public class MainFXController {
         String b = Integer.toString(a);
         kostkaLabel.setFont(Font.font(40));
         kostkaLabel.setText(b);
+        hod = a;
     }
 
+
+    public boolean vDomecku(){
+        if(fig.getLayoutX() == 535 || fig.getLayoutX() == 35){
+            return true;
+        }
+        return false;
+    }
 
     /*hod = HraciPlocha.hod();
         String b = Integer.toString(hod);
