@@ -31,9 +31,13 @@ public class MainFXController {
 
     LinkedList<Circle> figZ = new LinkedList<>();
     LinkedList<Color> barvy = new LinkedList<>();
-    Circle fig;
-    int[][] indexy = new int[2][1];
+    Circle circle;
+    int[] indexy = new int[2];
     int hod;
+    int[] domB = new int[4];
+    int[] domG = new int[4];
+    int[] domR = new int[4];
+    int[] domY = new int[4];
 
 
 
@@ -101,68 +105,99 @@ public class MainFXController {
                 kol.setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent mouseEvent) {
-                        fig = kol;
-                        indexy[0][0] = (int) kol.getLayoutX();
-                        indexy[1][0] = (int) kol.getLayoutY();
-                        pohyb();
+                        pohyb(kol);
                     }
                 });
             }
         }
     }
 
+    public void domecek(Circle circle){
+        if(circle.getFill()==Color.BLUE){
 
+        }
+        else if(circle.getFill()==Color.GREEN){
 
-    public void pohyb(){
-        if(hod == 6){
-            if(vDomecku()==true){
-                nasadFig();
-            }
-            posunFig();
         }
-        else{
-            posunFig();
-        }
-    }
+        else if(circle.getFill()==Color.RED){
 
-    public void nasadFig(){
-        if(fig.getFill()==Color.BLUE){
-            fig.setLayoutX(HraciPlocha.indexPole(0)[0]);
-            fig.setLayoutY(HraciPlocha.indexPole(0)[1]);
-        }
-        else if(fig.getFill()==Color.GREEN){
-            fig.setLayoutX(HraciPlocha.indexPole(10)[0]);
-            fig.setLayoutY(HraciPlocha.indexPole(10)[1]);
-        }
-        else if(fig.getFill()==Color.RED){
-            fig.setLayoutX(HraciPlocha.indexPole(20)[0]);
-            fig.setLayoutY(HraciPlocha.indexPole(20)[1]);
         }
         else {
-            fig.setLayoutX(HraciPlocha.indexPole(30)[0]);
-            fig.setLayoutY(HraciPlocha.indexPole(30)[1]);
+
         }
-
-
     }
 
-    public void posunFig() {
-
-        int x = 0;
-
-        while(indexy[0][0] != HraciPlocha.indexPole(x)[0] && indexy[1][0] != HraciPlocha.indexPole(x)[1]){
-            x++;
-        }
-        int kamIndex;
-        if(x+hod < 40){
-            kamIndex = x+hod;
+    public void pohyb(Circle circle){
+        if(hod == 6){
+            if(vDomecku(circle)){
+                nasadFig(circle);
+            }
+            else {
+                posunFig(circle);
+            }
         }
         else{
-            kamIndex = x+hod - 40;
+            posunFig(circle);
         }
-        fig.setLayoutX(HraciPlocha.indexPole(kamIndex)[0]);
-        fig.setLayoutY(HraciPlocha.indexPole(kamIndex)[1]);
     }
+
+    public void nasadFig(Circle circle){
+        if(circle.getFill()==Color.BLUE){
+            circle.setLayoutX(HraciPlocha.indexPole(0)[0]);
+            circle.setLayoutY(HraciPlocha.indexPole(0)[1]);
+        }
+        else if(circle.getFill()==Color.GREEN){
+            circle.setLayoutX(HraciPlocha.indexPole(10)[0]);
+            circle.setLayoutY(HraciPlocha.indexPole(10)[1]);
+        }
+        else if(circle.getFill()==Color.RED){
+            circle.setLayoutX(HraciPlocha.indexPole(20)[0]);
+            circle.setLayoutY(HraciPlocha.indexPole(20)[1]);
+        }
+        else {
+            circle.setLayoutX(HraciPlocha.indexPole(30)[0]);
+            circle.setLayoutY(HraciPlocha.indexPole(30)[1]);
+        }
+
+
+    }
+
+
+    public void posunFig(Circle circle) {
+        int kamIndex;
+        int kde = souradnicePolicka(circle.getLayoutX(),circle.getLayoutY());
+
+        if(kde+hod < 40){
+            kamIndex = kde+hod;
+        }
+        else{
+            kamIndex = kde+hod - 40;
+        }
+
+        if(circle.getFill()==Color.BLUE){
+            if(kamIndex>39){
+                if(kamIndex-40 > 3){
+                    System.out.println("Figurkou nelze táhnout");
+                }
+                else{
+                    domB[kamIndex-40]=1;
+                }
+            }
+        }
+        else if(circle.getFill()==Color.GREEN){
+
+        }
+        else if(circle.getFill()==Color.RED){
+
+        }
+        else {
+
+        }
+
+        circle.setLayoutX(HraciPlocha.indexPole(kamIndex)[0]);
+        circle.setLayoutY(HraciPlocha.indexPole(kamIndex)[1]);
+    }
+
 
     public void hod(){
         int a = HraciPlocha.hod();
@@ -172,13 +207,25 @@ public class MainFXController {
         hod = a;
     }
 
+    public int souradnicePolicka(double X, double Y) {
 
-    public boolean vDomecku(){
-        if(fig.getLayoutX() == 535 || fig.getLayoutX() == 35){
+        int vysledek = 0;
+        for (int j = 0; j < 40; j++) {
+            if (X == HraciPlocha.indexPole(j)[0] && Y == HraciPlocha.indexPole(j)[1]) {
+                vysledek = j;
+                break;
+            }
+        }
+        return vysledek;
+    }
+
+    public boolean vDomecku(Circle circle){
+        if(circle.getLayoutX() == 535 || circle.getLayoutX() == 35){
             return true;
         }
         return false;
     }
+
 
     /*hod = HraciPlocha.hod();
         String b = Integer.toString(hod);
