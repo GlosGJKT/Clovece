@@ -165,28 +165,36 @@ public class MainFXController {
 
     public void posunFig(Circle circle) {
         int kamIndex;
-        int kde = souradnicePolicka(circle.getLayoutX(),circle.getLayoutY());
+        int kde = souradnicePolicka(circle.getLayoutX(), circle.getLayoutY());
 
-        if(kde+hod < 40){
-            kamIndex = kde+hod;
-        }
-        else{
-            kamIndex = kde+hod - 40;
+        if (kde + hod < 40) {
+            kamIndex = kde + hod;
+        } else {
+            kamIndex = kde + hod - 40;
         }
 
-        if(circle.getFill()==Color.BLUE){
-            if(kamIndex>39){
-                if(kamIndex-40 > 3){
+
+        if (circle.getFill() == Color.BLUE) {
+            if (kamIndex > 39) {
+                if (kamIndex - 40 > 3) {
                     System.out.println("Figurkou nelze táhnout");
+                } else {
+                    domB[kamIndex - 40] = 1;
                 }
-                else{
-                    domB[kamIndex-40]=1;
+            }
+            else if (circle.getFill() == Color.GREEN) {
+                if (kde >= 10) {
+                } else {
+                    if (kamIndex > 9 && kamIndex - 9 > 3) {
+                        System.out.println("Figurkou nelze táhnout");
+                    } else if (kamIndex > 9 && kamIndex - 9 < 4) {
+                        domG[kamIndex - 9] = 1;
+                    } else {
+                    }
                 }
             }
         }
-        else if(circle.getFill()==Color.GREEN){
 
-        }
         else if(circle.getFill()==Color.RED){
 
         }
