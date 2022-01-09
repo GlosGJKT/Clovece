@@ -63,24 +63,22 @@ public class MainFXController {
 
 
         //domecky
-        platno.getGraphicsContext2D().setFill(Color.BLUE); //leva
-        for(int i = 69; i < 250; i += 50){
+        platno.getGraphicsContext2D().setFill(Color.PURPLE);
+
+        for(int i = 69; i < 250; i += 50){      //leva
             platno.getGraphicsContext2D().fillOval(i, 265, 30, 30);
         }
 
 
-        platno.getGraphicsContext2D().setFill(Color.RED); //prava
-        for(int i = 319; i < 500; i += 50){
+        for(int i = 319; i < 500; i += 50){     //prava
             platno.getGraphicsContext2D().fillOval(i, 265, 30, 30);
         }
 
-        platno.getGraphicsContext2D().setFill(Color.GREEN); //horni
-        for(int i = 65; i < 250; i += 50){
+        for(int i = 65; i < 250; i += 50){      //horni
             platno.getGraphicsContext2D().fillOval(268, i, 30, 30);
         }
 
-        platno.getGraphicsContext2D().setFill(Color.YELLOW); //dolni
-        for(int i = 315; i < 500; i += 50){
+        for(int i = 315; i < 500; i += 50){     //dolni
             platno.getGraphicsContext2D().fillOval(268, i, 30, 30);
         }
 
@@ -164,42 +162,57 @@ public class MainFXController {
 
 
     public void posunFig(Circle circle) {
-        int kamIndex;
+
+        int kamIndex= kamIndex(circle);
         int kde = souradnicePolicka(circle.getLayoutX(), circle.getLayoutY());
-
-        if (kde + hod < 40) {
-            kamIndex = kde + hod;
-        } else {
-            kamIndex = kde + hod - 40;
-        }
-
 
         if (circle.getFill() == Color.BLUE) {
             if (kamIndex > 39) {
                 if (kamIndex - 40 > 3) {
                     System.out.println("Figurkou nelze táhnout");
+                    kamIndex=kde;
                 } else {
                     domB[kamIndex - 40] = 1;
                 }
             }
-            else if (circle.getFill() == Color.GREEN) {
-                if (kde >= 10) {
+        }
+        else if (circle.getFill() == Color.GREEN) {
+            if (kde >= 10) {
+            } else {
+                if (kamIndex > 9 && kamIndex - 9 > 3) {
+                    System.out.println("Figurkou nelze táhnout");
+                    kamIndex=kde;
+                } else if (kamIndex > 9 && kamIndex - 9 < 4) {
+                    domG[kamIndex - 9] = 1;
                 } else {
-                    if (kamIndex > 9 && kamIndex - 9 > 3) {
-                        System.out.println("Figurkou nelze táhnout");
-                    } else if (kamIndex > 9 && kamIndex - 9 < 4) {
-                        domG[kamIndex - 9] = 1;
-                    } else {
-                    }
                 }
             }
         }
 
         else if(circle.getFill()==Color.RED){
-
+            if (kde >= 20) {
+            } else {
+                if (kamIndex > 19 && kamIndex - 19 > 3) {
+                    System.out.println("Figurkou nelze táhnout");
+                    kamIndex=kde;
+                } else if (kamIndex > 19 && kamIndex - 19 < 4) {
+                    domR[kamIndex - 19] = 1;
+                } else {
+                }
+            }
         }
-        else {
 
+        else {
+            if (kde >= 30 || kde <20) {
+            } else {
+                if (kamIndex > 29 && kamIndex - 29 > 3) {
+                    System.out.println("Figurkou nelze táhnout");
+                    kamIndex=kde;
+                } else if (kamIndex > 29 && kamIndex - 29 < 4) {
+                    domY[kamIndex - 29] = 1;
+                } else {
+                }
+            }
         }
 
         circle.setLayoutX(HraciPlocha.indexPole(kamIndex)[0]);
@@ -226,6 +239,33 @@ public class MainFXController {
         }
         return vysledek;
     }
+
+
+    public Circle leziFig(Circle circle){
+        Circle cir = null;
+        for (int x=0; x<16; x++){
+            if (figZ.get(x).getLayoutX() == HraciPlocha.indexPole(kamIndex(circle))[0] && figZ.get(x).getLayoutX() == HraciPlocha.indexPole(kamIndex(circle))[1]){
+                cir = figZ.get(x);
+                break;
+            }
+        }
+        return cir;
+    }
+
+
+    public int kamIndex(Circle circle){
+
+        int kamIndex;
+        int kde = souradnicePolicka(circle.getLayoutX(), circle.getLayoutY());
+
+        if (kde + hod < 40) {
+            kamIndex = kde + hod;
+        } else {
+            kamIndex = kde + hod - 40;
+        }
+        return kamIndex;
+    }
+
 
     public boolean vDomecku(Circle circle){
         if(circle.getLayoutX() == 535 || circle.getLayoutX() == 35){
