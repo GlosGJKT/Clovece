@@ -178,45 +178,64 @@ public class MainFXController {
         }
         else if (circle.getFill() == Color.GREEN) {
             if (kde >= 10) {
+                circle.setLayoutX(HraciPlocha.indexPole(kamIndex)[0]);
+                circle.setLayoutY(HraciPlocha.indexPole(kamIndex)[1]);
             } else {
                 if (kamIndex > 9 && kamIndex - 9 > 3) {
                     System.out.println("Figurkou nelze táhnout");
                     kamIndex=kde;
                 } else if (kamIndex > 9 && kamIndex - 9 < 4) {
                     domG[kamIndex - 9] = 1;
+                    System.out.println("Figurka v domecku");
+                    kamIndex= kamIndex-6;
+                    circle.setLayoutX(HraciPlocha.indexKonDom(kamIndex)[0]);
+                    circle.setLayoutY(HraciPlocha.indexKonDom(kamIndex)[1]);
                 } else {
+                    circle.setLayoutX(HraciPlocha.indexPole(kamIndex)[0]);
+                    circle.setLayoutY(HraciPlocha.indexPole(kamIndex)[1]);
                 }
             }
         }
 
         else if(circle.getFill()==Color.RED){
             if (kde >= 20) {
+                circle.setLayoutX(HraciPlocha.indexPole(kamIndex)[0]);
+                circle.setLayoutY(HraciPlocha.indexPole(kamIndex)[1]);
             } else {
                 if (kamIndex > 19 && kamIndex - 19 > 3) {
                     System.out.println("Figurkou nelze táhnout");
                     kamIndex=kde;
                 } else if (kamIndex > 19 && kamIndex - 19 < 4) {
                     domR[kamIndex - 19] = 1;
+                    kamIndex= kamIndex-8;
+                    circle.setLayoutX(HraciPlocha.indexKonDom(kamIndex)[0]);
+                    circle.setLayoutY(HraciPlocha.indexKonDom(kamIndex)[1]);
                 } else {
+                    circle.setLayoutX(HraciPlocha.indexPole(kamIndex)[0]);
+                    circle.setLayoutY(HraciPlocha.indexPole(kamIndex)[1]);
                 }
             }
         }
 
         else {
             if (kde >= 30 || kde <20) {
+                circle.setLayoutX(HraciPlocha.indexPole(kamIndex)[0]);
+                circle.setLayoutY(HraciPlocha.indexPole(kamIndex)[1]);
             } else {
                 if (kamIndex > 29 && kamIndex - 29 > 3) {
                     System.out.println("Figurkou nelze táhnout");
                     kamIndex=kde;
                 } else if (kamIndex > 29 && kamIndex - 29 < 4) {
                     domY[kamIndex - 29] = 1;
+                    kamIndex= kamIndex-25;
+                    circle.setLayoutX(HraciPlocha.indexKonDom(kamIndex)[0]);
+                    circle.setLayoutY(HraciPlocha.indexKonDom(kamIndex)[1]);
                 } else {
+                    circle.setLayoutX(HraciPlocha.indexPole(kamIndex)[0]);
+                    circle.setLayoutY(HraciPlocha.indexPole(kamIndex)[1]);
                 }
             }
         }
-
-        circle.setLayoutX(HraciPlocha.indexPole(kamIndex)[0]);
-        circle.setLayoutY(HraciPlocha.indexPole(kamIndex)[1]);
     }
 
 
